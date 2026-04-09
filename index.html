@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PyExplain Lite - Python代码解释器</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="bg-orb orb-left" aria-hidden="true"></div>
+  <div class="bg-orb orb-right" aria-hidden="true"></div>
+  <main class="app-shell">
+    <section class="panel input-panel" aria-label="输入区">
+      <header class="brand-row">
+        <div class="brand">
+          <span class="brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 128 128" role="img" aria-label="PyExplain logo">
+              <path fill="#2f7df7" d="M64 14c-28 0-26 12-26 12v14h26v4H27S10 43 10 68s15 24 15 24h9V79s0-15 14-15h24s13 .2 13-13V27S87 14 64 14z"/>
+              <circle cx="48" cy="28" r="4" fill="#fff"/>
+              <path fill="#f6ca3d" d="M65 114c28 0 26-12 26-12V88H65v-4h37s17 .8 17-24-15-24-15-24h-9v13s0 15-14 15H57s-13-.2-13 13v24s-2 13 21 13z"/>
+              <circle cx="80" cy="100" r="4" fill="#fff"/>
+            </svg>
+          </span>
+          <h1>PyExplain</h1>
+        </div>
+        <button id="quickToHistory" class="icon-btn" type="button" title="查看最近历史">历史</button>
+      </header>
+
+      <div class="intro">
+        <h2>Python 代码逐行翻译</h2>
+        <p>把 Python 基础代码翻译成新手也能看懂的人话。</p>
+        <div class="syntax-row" aria-label="支持语法">
+          <span class="syntax-chip">print</span>
+          <span class="syntax-chip">input</span>
+          <span class="syntax-chip">if/elif/else</span>
+          <span class="syntax-chip">for/while</span>
+          <span class="syntax-chip">def/return</span>
+          <span class="syntax-chip">try/except</span>
+          <span class="syntax-chip">class/import</span>
+        </div>
+      </div>
+
+      <label for="codeInput" class="section-title">输入代码</label>
+      <textarea
+        id="codeInput"
+        class="code-input"
+        spellcheck="false"
+        placeholder="for i in range(3):
+    print(i)"
+      ></textarea>
+
+      <div class="sample-grid" role="group" aria-label="示例代码">
+        <button class="sample-btn" type="button" data-example="output">输出示例</button>
+        <button class="sample-btn" type="button" data-example="input">输入示例</button>
+        <button class="sample-btn" type="button" data-example="loop">循环示例</button>
+        <button class="sample-btn" type="button" data-example="ifelse">判断示例</button>
+        <button class="sample-btn" type="button" data-example="advanced">进阶示例</button>
+        <button class="sample-btn" type="button" data-example="exception">异常示例</button>
+      </div>
+
+      <div class="action-row">
+        <button id="clearInputBtn" class="btn btn-ghost" type="button">清空输入</button>
+        <button id="explainBtn" class="btn btn-primary" type="button">开始解释</button>
+      </div>
+
+      <section class="quick-history-wrap" aria-label="最近历史">
+        <h3>最近历史</h3>
+        <p id="sampleUsageHint" class="usage-hint">历史会记录你最近 10 次解释。</p>
+        <ul id="quickHistoryList" class="history-list compact"></ul>
+      </section>
+    </section>
+
+    <section class="panel result-panel" aria-label="结果区">
+      <div class="tab-row" role="tablist" aria-label="结果视图">
+        <button id="tabExplain" class="tab-btn active" type="button" role="tab" aria-selected="true">代码解释</button>
+        <button id="tabHistory" class="tab-btn" type="button" role="tab" aria-selected="false">最近历史</button>
+      </div>
+
+      <div id="explainView" class="tab-view active" role="tabpanel">
+        <button id="backToInput" class="back-btn" type="button">← 返回输入</button>
+
+        <div class="source-box">
+          <div class="source-title">原始代码</div>
+          <pre id="sourcePreview" class="source-code">等待输入代码...</pre>
+        </div>
+
+        <div id="emptyResultHint" class="empty-state">
+          点击“开始解释”后，这里会展示逐行解释结果。
+        </div>
+
+        <ul id="explanationList" class="explanation-list"></ul>
+
+        <article id="summaryCard" class="summary-card" hidden>
+          <h3>整段解释</h3>
+          <p id="summaryText"></p>
+        </article>
+
+        <div class="action-row result-actions">
+          <button id="rerunBtn" class="btn btn-primary-light" type="button">再次解释</button>
+          <button id="clearResultBtn" class="btn btn-ghost" type="button">清空结果</button>
+        </div>
+      </div>
+
+      <div id="historyView" class="tab-view" role="tabpanel" hidden>
+        <div class="history-tip">用这个试试写，先对试一下吧。</div>
+        <div class="history-toolbar">
+          <span id="historyMeta" class="history-meta">已保存 0 条记录</span>
+          <button id="clearHistoryBtn" class="history-btn danger-lite" type="button">清空历史</button>
+        </div>
+        <ul id="historyList" class="history-list"></ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="./rules.js"></script>
+  <script src="./parser.js"></script>
+  <script src="./storage.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
